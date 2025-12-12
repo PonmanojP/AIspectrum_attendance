@@ -1,0 +1,12 @@
+Timestamp,Username,Name,Email- id,Mobile Number,Participant Category ,Department,Institution/Organization Name and Address,Institution Type,Select Days of Participation :AI Spectrum ,"Payment Method
+",Transaction ID / UPI Reference Number  ,Upload Payment Screenshot ,Full Name ,attendance
+2025-01-10 09:21:11,user001,Harini S,harini.s@example.com,9876543210,UG Student,Computer Science,Anna University,Engineering,Day 1,UPI,TXNUPI112233,screenshot1.png,Harini S,Yes
+2025-01-10 09:45:58,user002,Manoj P,manoj.p@example.com,9876501234,UG Student,Information Technology,IIT Madras,Engineering,Day 1 & Day 2,Net Banking,NBTXN334455,screenshot2.jpg,Ponmanoj P,No
+2025-01-10 10:02:33,user003,Rahul K,rahul.k@example.com,9876004321,PG Student,Electronics,PSG College of Technology,Engineering,Day 2,UPI,UPI998877,screenshot3.pdf,Rahul K,No
+2025-01-10 10:15:44,user004,Ananya R,ananya.r@example.com,9876112233,UG Student,Biotechnology,SRM University,Engineering,Day 1,Card,CARD556677,screenshot4.png,Ananya R,No
+2025-01-10 10:32:10,user005,Vikram J,vikram.j@example.com,9876223344,UG Student,Mechanical,Thiagarajar College of Engineering,Engineering,Day 1 & Day 3,UPI,UPI774411,screenshot5.jpg,Vikram J,Yes
+2025-01-10 10:58:22,user006,Sahana T,sahana.t@example.com,9876334455,UG Student,Computer Applications,Loyola College,Arts & Science,Day 3,Net Banking,NB229911,screenshot6.png,Sahana T,No
+2025-01-10 11:14:39,user007,Rohit M,rohit.m@example.com,9876445566,PG Student,Electrical and Electronics,Amrita University,Engineering,Day 2,UPI,UPI334466,screenshot7.pdf,Rohit M,No
+2025-01-10 11:40:08,user008,Priya N,priya.n@example.com,9876556677,UG Student,Information Technology,SSN College of Engineering,Engineering,Day 1 & Day 2,Card,CARD889900,screenshot8.png,Priya N,No
+2025-01-10 12:05:26,user009,Aravind K,aravind.k@example.com,9876667788,Research Scholar,Civil Engineering,Govt. College of Technology,Engineering,Day 3,Others,OTH112244,screenshot9.jpg,Aravind K,No
+2025-01-10 12:30:11,user010,Divya S,divya.s@example.com,9876778899,UG Student,AI & Data Science,VIT Chennai,Engineering,Day 1,UPI,UPI220044,screenshot10.png,Divya S,No

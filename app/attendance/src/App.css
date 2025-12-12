@@ -1,0 +1,238 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.app {
+  max-width: 980px;
+  margin: 20px auto;
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15,23,42,0.04);
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+h1 { margin: 0; font-size: 20px; letter-spacing: -0.2px; }
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.tab {
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #eef2ff;
+  background: linear-gradient(180deg,#fbfdff,#f7fbff);
+  color: #0f172a;
+  font-weight: 600;
+  font-size: 14px;
+}
+.tab.active {
+  background: linear-gradient(180deg,#0f172a,#0b1220);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(17,24,39,0.12);
+}
+
+/* Form layout: responsive two-column which collapses to single column on narrow screens */
+.form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.form-row > * {
+  flex: 1 1 calc(50% - 12px);
+  min-width: 220px;
+}
+input[type="text"], input[type="email"], select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e6edf6;
+  border-radius: 10px;
+  background: #fff;
+  color: #0f172a;
+  transition: box-shadow .12s, border-color .12s;
+  box-shadow: none;
+}
+input[type="file"] {
+  padding: 6px 0;
+  border: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #7c93ff;
+  box-shadow: 0 6px 18px rgba(124,147,255,0.12);
+}
+
+/* Submit button */
+button {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(180deg,#111827,#0b1220);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+button[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+/* Table: professional style */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  font-size: 14px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+}
+.table thead th {
+  text-align: left;
+  padding: 12px 14px;
+  background: linear-gradient(180deg,#f8fafc,#eef2ff);
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 13px;
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid #eef2ff;
+}
+.table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  color: #0f172a;
+}
+.table tbody tr:nth-child(odd) { background: #ffffff; }
+.table tbody tr:nth-child(even) { background: #fbfdff; }
+.table tbody tr:hover { background: #f1f5ff; }
+
+/* Attendance badge */
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.badge.yes { background: #ecfdf5; color: #065f46; border: 1px solid #bbf7d0; }
+.badge.no { background: #fff7ed; color: #92400e; border: 1px solid #ffd8a8; }
+
+/* Action button inside table */
+.table .action-btn {
+  padding: 8px 10px;
+  background: #2563eb;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.table .action-btn:disabled {
+  background: #9bb8ff;
+  cursor: not-allowed;
+}
+
+/* Table wrapper for horizontal scrolling on small screens */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+/* grid (side-by-side cards) - hidden on narrow screens, shown on wide screens */
+.grid-container {
+  display: none;
+  gap: 12px;
+  margin-top: 12px;
+  justify-content: center;      /* center the grid */
+  justify-items: center;        /* center items within grid cells */
+}
+
+/* card sizing */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 8px 22px rgba(15,23,42,0.06);
+  border: 1px solid rgba(15,23,42,0.03);
+  width: 100%;
+  max-width: 420px;   /* constrain width so cards don't grow too wide */
+}
+
+/* People tab layout */
+.people-grid {
+  display: grid;
+  gap: 18px;
+  margin-top: 14px;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+.people-card {
+  width: 100%;
+  max-width: 720px;
+  background: #fff;
+  padding: 14px;
+  border-radius: 10px;
+  box-shadow: 0 8px 22px rgba(15,23,42,0.04);
+  border: 1px solid rgba(15,23,42,0.03);
+  text-align: left;
+}
+@media (min-width: 900px) {
+  .people-grid {
+    grid-template-columns: 1fr 1fr; /* side-by-side lists on wide screens */
+    align-items: start;
+  }
+}
+
+/* ensure table inside people-card looks good */
+.people-card .table { margin-top: 8px; }
+.people-card .table thead th { background: #f8fafc; }
+
+/* ...existing code... */
