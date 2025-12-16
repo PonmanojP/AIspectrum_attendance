@@ -3,7 +3,7 @@ import './App.css';
 import Tabs from './components/Tabs';
 import AttendanceTab from './components/AttendanceTab';
 import RegistrationTab from './components/RegistrationTab';
-import PeopleTab from './components/PeopleTab'; // added
+import Presenters from './components/PresentersAttendanceTab'; // added
 
 const App = () => {
   const [active, setActive] = useState('attendance');
@@ -19,15 +19,15 @@ const App = () => {
         active={active}
         setActive={setActive}
         items={[
+          { id: 'presenters', label: 'Presenters' },
           { id: 'attendance', label: 'Attendance' },
-          { id: 'registration', label: 'New Registration' },
-          { id: 'people', label: 'People' } // new tab
+          { id: 'registration', label: 'New Registration' }
         ]}
       />
 
       {active === 'attendance' && <AttendanceTab />}
       {active === 'registration' && <RegistrationTab />}
-      {active === 'people' && <PeopleTab />} {/* render PeopleTab */}
+      {active === 'presenters' && <Presenters />} {/* render PresentersTab */}
     </div>
   );
 };

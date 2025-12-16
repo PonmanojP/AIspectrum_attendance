@@ -19,6 +19,7 @@ ensureDir(DATA_DIR);
 ensureDir(UPLOADS_DIR);
 
 const attendanceCsv = path.join(DATA_DIR, 'attendance.csv');
+const attendanceCsvPaperId = path.join(DATA_DIR, 'attendance for presenters.csv');
 const newCsv = path.join(DATA_DIR, 'new.csv');
 
 // multer setup for screenshot uploads
@@ -37,6 +38,12 @@ function getMobileKey(rows) {
     return Object.keys(rows[0]).find(k => k.toLowerCase().includes('mobile')) || null;
 }
 
+// helper to find paperID dynamically
+function getPaperIdKey(rows) {
+    if (!rows || !rows.length) return null;
+    return Object.keys(rows[0]).find(k => k.toLowerCase().includes('paper_id')) || null;
+}
+
 // GET /api/attendance?mobile=xxxxx
 app.get('/api/attendance', (req, res) => {
     const mobile = req.query.mobile;
@@ -51,6 +58,35 @@ app.get('/api/attendance', (req, res) => {
     res.json(result);
 });
 
+// GET /api/attendance/paper?paperId=xxxxx
+app.get('/api/attendance/paper', (req, res) => {
+  console.log('[GET /api/attendance/paper] called');
+  const paperId = req.query.paperId || req.query.paper_id;
+  if (!paperId) return res.status(400).json({ error: 'paperId query required' });
+
+  const rows = readCsv(attendanceCsvPaperId);
+  if (!rows.length) return res.status(404).json({ error: 'presenters attendance CSV is empty or missing' });
+
+  // detect paper id column flexibly
+  const keys = Object.keys(rows[0] || {});
+  let paperKey = findKey(keys, ['paper_id', 'paper id', 'paperid', 'paper']);
+  // fallback: normalize headers (remove non-alphanum) and look for 'paperid'
+  if (!paperKey) {
+    paperKey = keys.find(k => (k || '').toString().toLowerCase().replace(/[^a-z0-9]/g, '').includes('paperid')) || null;
+  }
+  if (!paperKey) {
+    console.error('[GET /api/attendance/paper] header keys:', keys);
+    return res.status(500).json({ error: 'paper id column not found in CSV' });
+  }
+  // log for debugging
+  console.log(`[GET /api/attendance/paper] lookup paperId=${paperId} using column='${paperKey}' rows=${rows.length}`);
+
+  const needle = String(paperId).trim().toLowerCase();
+  const matches = rows.filter(r => String(r[paperKey] || '').replace(/\"|\r|\n/g, '').trim().toLowerCase() === needle);
+  const result = matches.map(r => ({ ...r, attendance: r.attendance || 'No' }));
+  if (!result.length) return res.status(404).json({ error: 'paperId not found' });
+  res.json(result);
+});
 // POST /api/attendance/mark  body: { mobile }
 app.post('/api/attendance/mark', (req, res) => {
     const mobile = req.body.mobile;
@@ -74,6 +110,35 @@ app.post('/api/attendance/mark', (req, res) => {
 
     writeCsv(attendanceCsv, newRows);
     res.json({ success: true, message: 'Attendance marked' });
+});
+
+// POST /api/attendance/mark/paper  body: { paperId or paper_id }
+app.post('/api/attendance/mark/paper', (req, res) => {
+  const paperId = req.body.paperId || req.body.paper_id;
+  if (!paperId) return res.status(400).json({ error: 'paper_id required' });
+
+  const rows = readCsv(attendanceCsvPaperId);
+  if (!rows.length) return res.status(404).json({ error: 'presenters attendance CSV not found or empty' });
+
+  const keys = Object.keys(rows[0] || {});
+  const paperKey = findKey(keys, ['paper_id', 'paper id', 'paperid', 'paper']);
+  const attendanceKey = findKey(keys, ['attendance', 'attend']);
+  if (!paperKey || !attendanceKey) return res.status(500).json({ error: 'required columns not found in CSV' });
+
+  let updated = false;
+  const newRows = rows.map(r => {
+    if (String(r[paperKey] || '').trim().toLowerCase() === String(paperId).trim().toLowerCase()) {
+      r[attendanceKey] = 'Yes';
+      updated = true;
+    }
+    if (!r[attendanceKey]) r[attendanceKey] = 'No';
+    return r;
+  });
+
+  if (!updated) return res.status(404).json({ error: 'paperId not found in presenters CSV' });
+
+  writeCsv(attendanceCsvPaperId, newRows);
+  res.json({ success: true, message: 'Attendance marked for paper id' });
 });
 
 // POST /api/registration  multipart form
