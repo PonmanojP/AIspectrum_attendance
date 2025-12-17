@@ -91,7 +91,7 @@ h1 { margin: 0; font-size: 20px; letter-spacing: -0.2px; }
   flex: 1 1 calc(50% - 12px);
   min-width: 220px;
 }
-input[type="text"], input[type="email"], select, textarea {
+input[type="text"], input[type="email"], input[type="password"] select, textarea {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #e6edf6;

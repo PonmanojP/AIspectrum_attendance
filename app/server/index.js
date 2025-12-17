@@ -203,6 +203,25 @@ app.get('/api/people', (req, res) => {
 
 app.use('/uploads', express.static(UPLOADS_DIR));
 
+// Admin download endpoint - serves only specific CSV files (no auth server-side)
+app.get('/api/admin/download', (req, res) => {
+  const file = req.query.file;
+  const allowed = ['attendance.csv', 'attendance for presenters.csv', 'new.csv'];
+  if (!file || !allowed.includes(file)) {
+    return res.status(400).json({ error: 'invalid or missing file parameter' });
+  }
+
+  const filePath = path.join(DATA_DIR, file);
+  if (!fs.existsSync(filePath)) return res.status(404).json({ error: 'file not found' });
+
+  // send as attachment
+  res.download(filePath, file, (err) => {
+    if (err) {
+      console.error(`[GET /api/admin/download] error sending ${file}:`, err);
+      if (!res.headersSent) res.status(500).json({ error: 'failed to send file' });
+    }
+  });
+});
 app.listen(PORT, () => {
     console.log(`Backend running on http://localhost:${PORT}`);
     console.log(`Data folder: ${DATA_DIR}`);
