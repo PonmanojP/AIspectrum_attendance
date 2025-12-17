@@ -12,7 +12,6 @@ const App = () => {
     <div className="app">
       <div className="header">
         <h1>AI Spectrum - Onsite Portal</h1>
-        <div className="small">Backend: http://localhost:5000</div>
       </div>
 
       <Tabs

@@ -3,7 +3,7 @@ Timestamp,Username,Name,Email- id,Mobile Number,Participant Category ,Department
 2025-01-10 09:21:11,user001,Harini S,harini.s@example.com,9876543210,UG Student,Computer Science,Anna University,Engineering,Day 1,UPI,TXNUPI112233,screenshot1.png,Harini S,Yes, REG001
 2025-01-10 09:45:58,user002,Manoj P,manoj.p@example.com,9876501234,UG Student,Information Technology,IIT Madras,Engineering,Day 1 & Day 2,Net Banking,NBTXN334455,screenshot2.jpg,Ponmanoj P,No, REG002
 2025-01-10 10:02:33,user003,Rahul K,rahul.k@example.com,9876004321,PG Student,Electronics,PSG College of Technology,Engineering,Day 2,UPI,UPI998877,screenshot3.pdf,Rahul K,No ,REG003
-2025-01-10 10:15:44,user004,Ananya R,ananya.r@example.com,9876112233,UG Student,Biotechnology,SRM University,Engineering,Day 1,Card,CARD556677,screenshot4.png,Ananya R,No ,REG004
+2025-01-10 10:15:44,user004,Ananya R,ananya.r@example.com,9876112233,UG Student,Biotechnology,SRM University,Engineering,Day 1,Card,CARD556677,screenshot4.png,Ananya R,Yes,REG004
 2025-01-10 10:32:10,user005,Vikram J,vikram.j@example.com,9876223344,UG Student,Mechanical,Thiagarajar College of Engineering,Engineering,Day 1 & Day 3,UPI,UPI774411,screenshot5.jpg,Vikram J,No, REG005
 2025-01-10 10:58:22,user006,Sahana T,sahana.t@example.com,9876334455,UG Student,Computer Applications,Loyola College,Arts & Science,Day 3,Net Banking,NB229911,screenshot6.png,Sahana T,No, REG006
 2025-01-10 11:14:39,user007,Rohit M,rohit.m@example.com,9876445566,PG Student,Electrical and Electronics,Amrita University,Engineering,Day 2,UPI,UPI334466,screenshot7.pdf,Rohit M,No, REG007
