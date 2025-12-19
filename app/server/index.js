@@ -165,6 +165,78 @@ app.post('/api/registration', upload.single('paymentScreenshot'), (req, res) => 
     res.json({ success: true, message: 'Registration saved', record });
 });
 
+// POST /api/psg-students-registration - Save PSG student to attendance.csv
+app.post('/api/psg-students-registration', (req, res) => {
+    try {
+        const { name, rollNumber, department, email, phoneNumber, days } = req.body;
+        
+        if (!name || !rollNumber || !department || !email || !phoneNumber || !days || days.length === 0) {
+            return res.status(400).json({ error: 'name, rollNumber, department, email, phoneNumber, and days are required' });
+        }
+
+        // Read existing CSV to get all headers
+        const existingRows = readCsv(attendanceCsv);
+        if (!existingRows.length) {
+            return res.status(500).json({ error: 'attendance.csv is empty or missing headers' });
+        }
+
+        // Get all column headers from existing CSV
+        const headers = Object.keys(existingRows[0]);
+        
+        // Format days selection (e.g., ["day1", "day2"] -> "Day 1 & Day 2")
+        const formatDays = (daysArray) => {
+            const dayMap = { day1: 'Day 1', day2: 'Day 2', day3: 'Day 3' };
+            const formatted = daysArray.map(d => dayMap[d.toLowerCase()] || d).join(' & ');
+            return formatted;
+        };
+
+        // Create record with all fields from CSV, setting most to empty string
+        const record = {};
+        headers.forEach(header => {
+            record[header] = '';
+        });
+
+        // Set the provided fields
+        // Find matching header keys (flexible matching)
+        const nameKey = findKey(headers, ['name']) || 'Name';
+        const fullNameKey = findKey(headers, ['full name', 'fullname']) || 'Full Name';
+        const emailKey = findKey(headers, ['email', 'e-mail']) || 'Email- id';
+        const mobileKey = findKey(headers, ['mobile', 'phone']) || 'Mobile Number';
+        const deptKey = findKey(headers, ['department']) || 'Department';
+        const daysKey = findKey(headers, ['days', 'participation']) || 'Select Days of Participation :AI Spectrum ';
+        const attendanceKey = 'attendance';
+        const usernameKey = findKey(headers, ['username']) || 'Username';
+
+        // Set both Name and Full Name fields
+        record[nameKey] = name;
+        if (fullNameKey) record[fullNameKey] = name;
+        record[emailKey] = email;
+        record[mobileKey] = phoneNumber;
+        record[deptKey] = department;
+        record[daysKey] = formatDays(Array.isArray(days) ? days : [days]);
+        record[attendanceKey] = 'Yes';
+        record[usernameKey] = rollNumber; // Use roll number as username
+        
+        // Format timestamp to match CSV format: YYYY-MM-DD HH:MM:SS
+        const now = new Date();
+        const timestampKey = findKey(headers, ['timestamp']) || 'Timestamp';
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        record[timestampKey] = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+        // Append to attendance.csv
+        appendCsv(attendanceCsv, record);
+        res.json({ success: true, message: 'PSG student registered and attendance marked', record });
+    } catch (err) {
+        console.error('Error saving PSG student registration:', err);
+        res.status(500).json({ error: 'Failed to save PSG student registration', details: err.message });
+    }
+});
+
 // Helper to pick keys (name, mobile, email) with flexible headers
 function findKey(objKeys, substrings) {
   const lower = objKeys.map(k => k.toLowerCase());

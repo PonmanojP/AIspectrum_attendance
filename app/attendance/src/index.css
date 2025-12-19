@@ -1,6 +1,10 @@
 /* global reset + base */
 * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-html,body,#root { height: 100%; }
+html,body,#root { 
+  height: 100%; 
+  width: 100%;
+  overflow-x: hidden;
+}
 body {
   margin: 0;
   padding: 24px;
@@ -11,6 +15,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.4;
   font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 8px;
+    font-size: 14px;
+  }
 }
 .small { font-size: 13px; color: #6b7280; }
 button { font: inherit; }
