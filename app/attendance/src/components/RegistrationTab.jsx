@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import api from '../services/api';
+import { verifyLocation } from '../utils/locationVerification';
 
 const RegistrationTab = () => {
     const fileRef = useRef(null);
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -34,12 +36,24 @@ const RegistrationTab = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formDataToSend = new FormData();
-        Object.keys(formData).forEach(key => {
-            formDataToSend.append(key, formData[key]);
-        });
-
+        setLoading(true);
+        
         try {
+            // Verify location first
+            const locationCheck = await verifyLocation();
+            
+            if (!locationCheck.isValid) {
+                alert(locationCheck.message);
+                setLoading(false);
+                return;
+            }
+
+            // Location verified, proceed with registration
+            const formDataToSend = new FormData();
+            Object.keys(formData).forEach(key => {
+                formDataToSend.append(key, formData[key]);
+            });
+
             await api.post('/registration', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -63,6 +77,8 @@ const RegistrationTab = () => {
         } catch (error) {
             console.error('Error during registration:', error);
             alert('Registration failed. Please try again.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -118,7 +134,9 @@ const RegistrationTab = () => {
                 <div style={{ marginBottom: 12 }}>
                   <input ref={fileRef} type="file" name="paymentScreenshot" onChange={handleFileChange} required />
                 </div>
-                <button type="submit">Register & Mark Attendance</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Verifying Location...' : 'Register & Mark Attendance'}
+                </button>
             </form>
         </div>
     );

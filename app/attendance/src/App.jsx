@@ -9,6 +9,13 @@ import AdminPage from './components/AdminPage'
 const App = () => {
   const [active, setActive] = useState('attendance');
 
+  const tabItems = [
+    { id: 'presenters', label: 'Presenters', content: <Presenters /> },
+    { id: 'attendance', label: 'Attendee', content: <AttendanceTab /> },
+    { id: 'registration', label: 'New Registration', content: <RegistrationTab /> },
+    { id: 'psg-students', label: 'PSG Students Registration', content: <PSGStudentsRegistrationTab /> }
+  ];
+
   return (
     <div className="app">
       <div className="header">

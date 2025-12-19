@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import AttendanceTab from './AttendanceTab';
-import RegistrationTab from './RegistrationTab';
+import React from 'react';
 
 const Tabs = ({ items, active, setActive }) => {
   return (
